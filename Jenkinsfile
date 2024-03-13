@@ -34,20 +34,20 @@ pipeline{
             steps {
                     script {
 
-                    def NexusRepo = Version.endsWith("SNAPSHOT") ? "HixDevLab-SNAPSHOT" : "HixDevLab-RELEASE"
+                    def NexusRepo = VERSION.endsWith("SNAPSHOT") ? "HixDevLab-SNAPSHOT" : "HixDevLab-RELEASE"
 
                     nexusArtifactUploader artifacts: 
-                    [[artifactId: "${ArtifactId}", 
+                    [[artifactId: "${ARTIFACTID}", 
                     classifier: '', 
-                    file: "target/${ArtifactId}-${Version}.war", 
+                    file: "target/${ARTIFACTID}-${VERSION}.war", 
                     type: 'war']], 
                     credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
-                    groupId: "${GroupId}",  
+                    groupId: "${GROUPID}",  
                     nexusUrl: '3.74.154.152:8081', 
                     nexusVersion: 'nexus3', 
                     protocol: 'http', 
                     repository: "${NexusRepo}",
-                    version: "${Version}"
+                    version: "${VERSION}"
                 }
             }
         }
