@@ -8,7 +8,7 @@ pipeline{
        ArtifactId = readMavenPom().getArtifactId()
        Version = readMavenPom().getVersion()
        Name = readMavenPom().getName()
-       GroupId = readMavenPom().getGroupId()
+       //GroupId = readMavenPom().getGroupId()
     }
     stages {
         // Specify various stage with in stages
@@ -28,33 +28,33 @@ pipeline{
             }
         }
 
-        // Stage3 : Publish the artifacts to Nexus
+          // Stage3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus'){
             steps {
                 nexusArtifactUploader artifacts: 
-                [[artifactId: "${ArtifactId}", 
+                [[artifactId: 'HixDevLab',
                 classifier: '', 
-                file: "target/${ArtifactId}-${Version}.war", 
+                file: 'target/HixDevLab-0.0.2-SNAPSHOT.war', 
                 type: 'war']], 
                 credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
-                groupId: "${GroupId}",
+                groupId: 'de.hixdevlab', 
                 nexusUrl: '3.74.154.152:8081', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'HixDevLab-SNAPSHOT', 
-                version: "${Version}"
+                version: '0.0.2-SNAPSHOT'
             }
         }
 
         // Stage 4 : Print some information
         stage ('Print Environment variables'){
-          steps {
-                echo "Artifact ID is '${ArtifactId}'"
-                echo "Version is '${Version}'"
-                echo "GroupID is '${GroupId}'"
-                echo "Name is '${Name}'"
-            }
-        }
+                    steps {
+                        echo "Artifact ID is '${ArtifactId}'"
+                        echo "Version is '${Version}'"
+                        echo "GroupID is '${GroupId}'"
+                        echo "Name is '${Name}'"
+                    }
+                }
 
         // Stage3 : Publish the source code to Sonarqube
         // stage ('Sonarqube Analysis'){
