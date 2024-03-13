@@ -10,7 +10,7 @@ pipeline{
        //VERSION = readMavenPom().getVersion()
        //NAME = readMavenPom().getName()
        //GroupId = readMavenPom().getGroupId()
-       ARTIFACTID = 'readMavenPom().getArtifactId()'
+       ARTIFACTID = readMavenPom().getArtifactId()
        VERSION = 'readMavenPom().getVersion()'
        NAME = 'readMavenPom().getName()'
        GROUPID = 'readMavenPom().getGroupId()'
@@ -48,7 +48,7 @@ pipeline{
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'HixDevLab-SNAPSHOT', 
-                version: '0.0.3-SNAPSHOT'
+                version: '0.0.4-SNAPSHOT'
             }
         }
         
