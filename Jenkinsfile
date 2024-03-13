@@ -33,7 +33,6 @@ pipeline{
         stage ('Publish to Nexus'){
             steps {
                     script {
-
                     def NexusRepo = VERSION.endsWith("SNAPSHOT") ? "HixDevLab-SNAPSHOT" : "HixDevLab-RELEASE"
 
                     nexusArtifactUploader artifacts: 
