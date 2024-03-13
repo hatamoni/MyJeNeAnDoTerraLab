@@ -6,10 +6,6 @@ pipeline{
     }
 
     environment {
-       //ARTIFACTID = readMavenPom().getArtifactId()
-       //VERSION = readMavenPom().getVersion()
-       //NAME = readMavenPom().getName()
-       //GroupId = readMavenPom().getGroupId()
        ARTIFACTID = readMavenPom().getArtifactId()
        VERSION = readMavenPom().getVersion()
        NAME = readMavenPom().getName()
@@ -36,18 +32,23 @@ pipeline{
           // Stage3 : Publish the artifacts to Nexus
         stage ('Publish to Nexus'){
             steps {
-                nexusArtifactUploader artifacts: 
-                [[artifactId: 'HixDevLab',
-                classifier: '', 
-                file: 'target/HixDevLab-0.0.4-SNAPSHOT.war', 
-                type: 'war']], 
-                credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
-                groupId: 'de.hixdevlab', 
-                nexusUrl: '3.74.154.152:8081', 
-                nexusVersion: 'nexus3', 
-                protocol: 'http', 
-                repository: 'HixDevLab-SNAPSHOT', 
-                version: '0.0.4-SNAPSHOT'
+                    script {
+
+                    def NexusRepo = Version.endsWith("SNAPSHOT") ? "HixDevLab-SNAPSHOT" : "HixDevLab-RELEASE"
+
+                    nexusArtifactUploader artifacts: 
+                    [[artifactId: "${ArtifactId}", 
+                    classifier: '', 
+                    file: "target/${ArtifactId}-${Version}.war", 
+                    type: 'war']], 
+                    credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
+                    groupId: "${GroupId}",  
+                    nexusUrl: '3.74.154.152:8081', 
+                    nexusVersion: 'nexus3', 
+                    protocol: 'http', 
+                    repository: "${NexusRepo}",
+                    version: "${Version}"
+                }
             }
         }
         
