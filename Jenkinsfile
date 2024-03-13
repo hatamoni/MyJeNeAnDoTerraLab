@@ -11,9 +11,9 @@ pipeline{
        //NAME = readMavenPom().getName()
        //GroupId = readMavenPom().getGroupId()
        ARTIFACTID = readMavenPom().getArtifactId()
-       VERSION = 'readMavenPom().getVersion()'
-       NAME = 'readMavenPom().getName()'
-       GROUPID = 'readMavenPom().getGroupId()'
+       VERSION = readMavenPom().getVersion()
+       NAME = readMavenPom().getName()
+       GROUPID = readMavenPom().getGroupId()
     }
 
     stages {
