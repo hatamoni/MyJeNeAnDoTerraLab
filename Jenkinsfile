@@ -29,7 +29,7 @@ pipeline{
                 nexusArtifactUploader artifacts: 
                 [[artifactId: 'HixDevLab',
                 classifier: '', 
-                file: 'target/HixDevLab-0.0.1-SNAPSHOT.war', 
+                file: 'target/HixDevLab-0.0.2-SNAPSHOT.war', 
                 type: 'war']], 
                 credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
                 groupId: 'de.hixdevlab', 
@@ -37,7 +37,7 @@ pipeline{
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'HixDevLab-SNAPSHOT', 
-                version: '0.0.1-SNAPSHOT'
+                version: '0.0.2-SNAPSHOT'
             }
         }
 
