@@ -37,7 +37,7 @@ pipeline{
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'HixDevLab-SNAPSHOT', 
-                version: '0.0.2-SNAPSHOT'
+                version: '0.0.3-SNAPSHOT'
             }
         }    
     }
