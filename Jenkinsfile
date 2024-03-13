@@ -5,6 +5,13 @@ pipeline{
         maven 'maven'
     }
 
+    environment{
+       ArtifactId = readMavenPom().getArtifactId()
+       Version = readMavenPom().getVersion()
+       Name = readMavenPom().getName()
+       //GroupId = readMavenPom().getGroupId()
+    }
+
     stages {
         // Specify various stage with in stages
 
@@ -39,6 +46,16 @@ pipeline{
                 repository: 'HixDevLab-SNAPSHOT', 
                 version: '0.0.3-SNAPSHOT'
             }
+        }
+        
+        // Stage 4 : Print some information
+        stage ('Print Environment variables'){
+                    steps {
+                        echo "Artifact ID is '${ArtifactId}'"
+                        echo "Version is '${Version}'"
+                        echo "GroupID is ''"
+                        echo "Name is '${Name}'"
+                    }
         }    
     }
 }
