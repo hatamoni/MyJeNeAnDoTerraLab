@@ -4,7 +4,12 @@ pipeline{
     tools {
         maven 'maven'
     }
-
+    environment{
+       ArtifactId = readMavenPom().getArtifactId()
+       Version = readMavenPom().getVersion()
+       Name = readMavenPom().getName()
+       GroupId = readMavenPom().getGroupId()
+    }
     stages {
         // Specify various stage with in stages
 
@@ -27,17 +32,27 @@ pipeline{
         stage ('Publish to Nexus'){
             steps {
                 nexusArtifactUploader artifacts: 
-                [[artifactId: 'HixDevLab',
+                [[artifactId: "${ArtifactId}", 
                 classifier: '', 
-                file: 'target/HixDevLab-0.0.2-SNAPSHOT.war', 
+                file: "target/${ArtifactId}-${Version}.war", 
                 type: 'war']], 
                 credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
-                groupId: 'de.hixdevlab', 
+                groupId: "${GroupId}",
                 nexusUrl: '3.74.154.152:8081', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
                 repository: 'HixDevLab-SNAPSHOT', 
-                version: '0.0.2-SNAPSHOT'
+                version: "${Version}"
+            }
+        }
+
+        // Stage 4 : Print some information
+        stage ('Print Environment variables'){
+          steps {
+                echo "Artifact ID is '${ArtifactId}'"
+                echo "Version is '${Version}'"
+                echo "GroupID is '${GroupId}'"
+                echo "Name is '${Name}'"
             }
         }
 
