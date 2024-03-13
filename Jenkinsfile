@@ -23,6 +23,24 @@ pipeline{
             }
         }
 
+          // Stage3 : Publish the artifacts to Nexus
+        stage ('Publish to Nexus'){
+            steps {
+                nexusArtifactUploader artifacts: 
+                [[artifactId: 'HixDevLab',
+                classifier: '', 
+                file: 'target/HixDevLab-0.0.1-SNAPSHOT.war', 
+                type: 'war']], 
+                credentialsId: 'dc6d56c0-9d56-4f90-a098-e2739bbc5daf', 
+                groupId: 'de.hixdevlab', 
+                nexusUrl: '3.74.154.152', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'HixDevLab-SNAPSHOT', 
+                version: '0.0.1-SNAPSHOT'
+            }
+        }
+
         // Stage3 : Publish the source code to Sonarqube
         // stage ('Sonarqube Analysis'){
         //     steps {
